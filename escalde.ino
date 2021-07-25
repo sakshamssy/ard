@@ -100,30 +100,34 @@ void loop() {
   Serial.print(intX);
   Serial.print(" ");
   Serial.println(intY);
-  if (inY > 800) //JoyCon1
+  if (intY > 800||intY < 100||intX > 800||intX < 100)
   {
-    forward();
-  }
-  else if (inY < 100)
-  {
-    backward();
-  }
-  else
-  {
-    stopmot();
-  }
+    if (intY > 800) //JoyCon1
+    {
+      forward();
+      Serial.println("Forward.");
 
-  if (inX > 800)
-  {
-    rightTurn();
-  }
-  else if (inX < 100)
-  {
-    leftTurn();
+    }
+    else if (intY < 100)
+    {
+      backward();
+      Serial.println("Backward.");
+    }
+    if (intX > 800)
+    {
+      rightTurn();
+      Serial.println("Right Turn");
+    }
+    else if (intX < 100)
+    {
+      leftTurn();
+      Serial.println("Left Turn");
+    }
   }
   else
   {
     stopmot();
+    Serial.println("Stopped");
   }
 
   if (inX2 > 800)    //Joycon2 for Servo
