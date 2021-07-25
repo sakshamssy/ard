@@ -97,8 +97,8 @@ void loop() {
   //need to discuss this partttttttt
   intY = analogRead(A1);
   intX = analogRead(A0);
-  Serial.println(inY);
-  Serial.println(inX);
+  Serial.println(intY);
+  Serial.println(intX);
   if (inY > 800) //JoyCon1
   {
     forward();
