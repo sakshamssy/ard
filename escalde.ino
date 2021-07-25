@@ -37,14 +37,14 @@ void forward()
   digitalWrite(pin_2, LOW);
   digitalWrite(pin_3, HIGH);
   digitalWrite(pin_4, LOW);
- 
+
 }
 void stopmot()
 {
   digitalWrite(pin_1, LOW);
   digitalWrite(pin_2, LOW);
   digitalWrite(pin_3, LOW);
-  digitalWrite(pin_4, LOW); 
+  digitalWrite(pin_4, LOW);
 }
 void backward()
 {
@@ -52,7 +52,7 @@ void backward()
   digitalWrite(pin_2, HIGH);
   digitalWrite(pin_3, LOW);
   digitalWrite(pin_4, HIGH);
- 
+
 }
 void rightTurn()
 {
@@ -60,7 +60,7 @@ void rightTurn()
   digitalWrite(pin_2, LOW);      //MAKING LEFT MOTORS WORK TO TURN RIGHT
   digitalWrite(pin_3, LOW);
   digitalWrite(pin_4, LOW);
- 
+
 }
 void leftTurn()
 {
@@ -68,22 +68,21 @@ void leftTurn()
   digitalWrite(pin_2, LOW);      //MAKING RIGHT MOTORS WORK TO TURN LEFT
   digitalWrite(pin_3, HIGH);
   digitalWrite(pin_4, LOW);
- 
+
 }
 
 
 void setup() {
-  pinMode(pin_1,OUTPUT);
-  pinMode(pin_2,OUTPUT);
-  pinMode(pin_3,OUTPUT);
-  pinMode(pin_4,OUTPUT);
+  pinMode(pin_1, OUTPUT);
+  pinMode(pin_2, OUTPUT);
+  pinMode(pin_3, OUTPUT);
+  pinMode(pin_4, OUTPUT);
   gripper_motor_1.attach(Servo_pin1);
   gripper_motor_2.attach(Servo_pin2);
-  
-    pinMode(7, INPUT_PULLUP); //set pin 7 as an input and enable the internal pull-up resistor
+  pinMode(7, INPUT_PULLUP); //set pin 7 as an input and enable the internal pull-up resistor
   Serial.begin(9600);
 
-//Setup for Joycon and its inbuilt switch
+  //Setup for Joycon and its inbuilt switch
   pinMode(inX, INPUT); // setup x input
   pinMode(inY, INPUT); // setup y input
   pinMode(inPressed, INPUT_PULLUP); // we use a pullup-resistor for the button functionality
@@ -94,80 +93,80 @@ void setup() {
 }
 
 void loop() {
- //need to discuss this partttttttt
+  //need to discuss this partttttttt
+  intY = analogRead(A1);
+  intX = analogRead(A0);
   Serial.println(inY);
   Serial.println(inX);
-  Serial.println(inY2);
-  Serial.println(inX2);
-    if(inY>800)   //JoyCon1
-    {
-      forward();
-    }
-    else if(inY<100)
-    {
-      backward();
-    }
-    else
-    {
-      stopmot();
-    }
+  if (inY > 800) //JoyCon1
+  {
+    forward();
+  }
+  else if (inY < 100)
+  {
+    backward();
+  }
+  else
+  {
+    stopmot();
+  }
 
-    if(inX>800)
-    {
-      rightTurn();
-    }
-    else if(inX<100)
-    {
-      leftTurn();
-    }
-    else
-    {
-      stopmot();
-    }
-    
-   if(inX2>800)       //Joycon2 for Servo
-    {
-     //Servo1 Pos1
-    }
-    else if(inX2<100)
-    {
-     //Servo1 Pos 0
-    }
-  
+  if (inX > 800)
+  {
+    rightTurn();
+  }
+  else if (inX < 100)
+  {
+    leftTurn();
+  }
+  else
+  {
+    stopmot();
+  }
 
-    if(inY2>800)
-    {
-      //Servo2 Pos1
-    }
-    else if(inY2<100)
-    {
-      //Servo2 Pos0
-    }
+  if (inX2 > 800)    //Joycon2 for Servo
+  {
+    //Servo1 Pos1
+  }
+  else if (inX2 < 100)
+  {
+    //Servo1 Pos 0
+  }
 
-    if(inPressed==0 && inPressed2==0)
-    {
-      //ropeclimber not Working
-    }
-    else if(inPressed==1 && inPressed2==0)
-    {
-      //ropeclimbs upppp
-    }
-    else if(inPressed==1 && inPressed2==1)
-    {
-      //ropeclimbs down
-    }
-  
+
+  if (inY2 > 800)
+  {
+    //Servo2 Pos1
+  }
+  else if (inY2 < 100)
+  {
+    //Servo2 Pos0
+  }
+
+  if (inPressed == 0 && inPressed2 == 0)
+  {
+    //ropeclimber not Working
+  }
+  else if (inPressed == 1 && inPressed2 == 0)
+  {
+    //ropeclimbs upppp
+  }
+  else if (inPressed == 1 && inPressed2 == 1)
+  {
+    //ropeclimbs down
+  }
+
   //Servo 1
-   
-    gripper_motor_1.write(45);              
-    delay(delayTime);                       
-  
- 
+
+  gripper_motor_1.write(45);
+  delay(delayTime);
+
+
   //Servo 2
-  
-    gripper_motor_2.write(45);              
-    delay(delayTime);                       
-  
- 
-  
+
+  gripper_motor_2.write(45);
+  delay(delayTime);
+
+
+
 }
