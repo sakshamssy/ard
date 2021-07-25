@@ -1,6 +1,6 @@
 #include <Servo.h>
-int pin_1 = 9;//left motor forward
-int pin_2 = 8;//left motor backward
+int pin_1 = 8;//left motor forward
+int pin_2 = 9;//left motor backward
 int intY;
 int intX;
 int pin_3 = 10;//right motor forward
@@ -57,18 +57,18 @@ void backward()
 }
 void rightTurn()
 {
-  digitalWrite(pin_1, HIGH);
-  digitalWrite(pin_2, LOW);      //MAKING LEFT MOTORS WORK TO TURN RIGHT
-  digitalWrite(pin_3, LOW);
+  digitalWrite(pin_1, 0);
+  digitalWrite(pin_2, 1);      //MAKING LEFT MOTORS WORK TO TURN RIGHT
+  digitalWrite(pin_3, 1);
   digitalWrite(pin_4, LOW);
 
 }
 void leftTurn()
 {
-  digitalWrite(pin_1, LOW);
+  digitalWrite(pin_1, 1);
   digitalWrite(pin_2, LOW);      //MAKING RIGHT MOTORS WORK TO TURN LEFT
-  digitalWrite(pin_3, HIGH);
-  digitalWrite(pin_4, LOW);
+  digitalWrite(pin_3, 0);
+  digitalWrite(pin_4, 1);
 
 }
 
