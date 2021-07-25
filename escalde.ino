@@ -39,6 +39,13 @@ void forward()
   digitalWrite(pin_4, LOW);
  
 }
+void stop()
+{
+  digitalWrite(pin_1, LOW);
+  digitalWrite(pin_2, LOW);
+  digitalWrite(pin_3, LOW);
+  digitalWrite(pin_4, LOW); 
+}
 void backward()
 {
   digitalWrite(pin_1, LOW);
@@ -100,6 +107,10 @@ void loop() {
     {
       backward();
     }
+    else
+    {
+      stop();
+    }
 
     if(inX>800)
     {
@@ -108,6 +119,10 @@ void loop() {
     else if(inX<100)
     {
       leftTurn();
+    }
+    else
+    {
+      stop();
     }
     
    if(inX2>800)       //Joycon2 for Servo
@@ -118,6 +133,7 @@ void loop() {
     {
      //Servo1 Pos 0
     }
+  
 
     if(inY2>800)
     {
