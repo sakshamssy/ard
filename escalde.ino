@@ -97,8 +97,10 @@ void loop() {
   //need to discuss this partttttttt
   intY = analogRead(A1);
   intX = analogRead(A0);
+  Serial.print("X: ");
   Serial.print(intX);
   Serial.print(" ");
+  Serial.print("Y: ");
   Serial.println(intY);
   if (intY > 800||intY < 100||intX > 800||intX < 100)
   {
