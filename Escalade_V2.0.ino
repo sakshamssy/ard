@@ -89,25 +89,25 @@ void setup() {
 
 void loop() {
  //need to discuss this partttttttt
-    if(inX>800)
+    if(inY>800)   //JoyCon1
     {
       forward();
-    }
-    else if(inX<100)
-    {
-      backward();
-    }
-
-    if(inY>800)
-    {
-      rightTurn();
     }
     else if(inY<100)
     {
       backward();
     }
+
+    if(inX>800)
+    {
+      rightTurn();
+    }
+    else if(inX<100)
+    {
+      leftTurn();
+    }
     
-   if(inX2>800)
+   if(inX2>800)       //Joycon2 for Servo
     {
      //Servo1 Pos1
     }
