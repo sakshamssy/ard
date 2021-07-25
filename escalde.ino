@@ -66,7 +66,6 @@ void leftTurn()
 
 
 void setup() {
-  
   pinMode(pin_1,OUTPUT);
   pinMode(pin_2,OUTPUT);
   pinMode(pin_3,OUTPUT);
@@ -89,6 +88,10 @@ void setup() {
 
 void loop() {
  //need to discuss this partttttttt
+  Serial.println(inY);
+  Serial.println(inX);
+  Serial.println(inY2);
+  Serial.println(inX2);
     if(inY>800)   //JoyCon1
     {
       forward();
