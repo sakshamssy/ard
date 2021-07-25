@@ -1,7 +1,8 @@
 #include <Servo.h>
 int pin_1 = 9;//left motor forward
 int pin_2 = 8;//left motor backward
-
+int intY;
+int intX;
 int pin_3 = 10;//right motor forward
 int pin_4 = 11;//right motor backward
 
