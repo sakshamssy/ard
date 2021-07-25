@@ -19,16 +19,16 @@ int delayTime = 700;
 const int inX = A0; // analog input for x-axis
 const int inY = A1; // analog input for y-axis
 const int inPressed = 7; // input for detecting whether the joystick/button is pressed
-int xValue = 400; // variable to store x value
-int yValue = 400; // variable to store y value
+int xValue = 506; // variable to store x value
+int yValue = 506; // variable to store y value
 int notPressed = 0; // variable to store the button's state => 1 if not pressed
 
 //JoyCon2
 const int inX2 = A4; // analog input for x-axis
 const int inY2 = A5; // analog input for y-axis
 const int inPressed2 = 6; // input for detecting whether the joystick/button is pressed
-int xValue2 = 400; // variable to store x value
-int yValue2 = 400; // variable to store y value
+int xValue2 = 506; // variable to store x value
+int yValue2 = 506; // variable to store y value
 int notPressed2 = 0; // variable to store the button's state => 1 if not pressed
 
 void forward()
@@ -39,7 +39,7 @@ void forward()
   digitalWrite(pin_4, LOW);
  
 }
-void stop()
+void stopmot()
 {
   digitalWrite(pin_1, LOW);
   digitalWrite(pin_2, LOW);
@@ -109,7 +109,7 @@ void loop() {
     }
     else
     {
-      stop();
+      stopmot();
     }
 
     if(inX>800)
@@ -122,7 +122,7 @@ void loop() {
     }
     else
     {
-      stop();
+      stopmot();
     }
     
    if(inX2>800)       //Joycon2 for Servo
