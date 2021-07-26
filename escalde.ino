@@ -1,10 +1,6 @@
 #include <Servo.h>
 int pin_1 = 8;//left motor forward
 int pin_2 = 9;//left motor backward
-int Yval;
-int Xval;
-int Yval2;
-int Xval2;
 int pin_3 = 10;//right motor forward
 int pin_4 = 11;//right motor backward
 
@@ -22,16 +18,16 @@ int delayTime = 700;
 const int inX = A0; // analog input for x-axis
 const int inY = A1; // analog input for y-axis
 const int inPressed = 7; // input for detecting whether the joystick/button is pressed
-int xValue = 506; // variable to store x value
-int yValue = 506; // variable to store y value
+int Xval; // variable to store x value
+int Yval; // variable to store y value
 int notPressed = 0; // variable to store the button's state => 1 if not pressed
 
 //JoyCon2
 const int inX2 = A4; // analog input for x-axis
 const int inY2 = A5; // analog input for y-axis
 const int inPressed2 = 6; // input for detecting whether the joystick/button is pressed
-int xValue2 = 506; // variable to store x value
-int yValue2 = 506; // variable to store y value
+int Xval2; // variable to store x value
+int Yval2; // variable to store y value
 int notPressed2 = 0; // variable to store the button's state => 1 if not pressed
 
 void forward()
