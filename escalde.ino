@@ -1,8 +1,10 @@
 #include <Servo.h>
 int pin_1 = 8;//left motor forward
 int pin_2 = 9;//left motor backward
-int intY;
-int intX;
+int Yval;
+int Xval;
+int Yval2;
+int Xval2;
 int pin_3 = 10;//right motor forward
 int pin_4 = 11;//right motor backward
 
@@ -95,32 +97,34 @@ void setup() {
 
 void loop() {
   //need to discuss this partttttttt
-  intY = analogRead(A1);
-  intX = analogRead(A0);
+  Yval2 = analogRead(inY2);
+  Xval2 = analogRead(inX2);
+  Yval = analogRead(inY);
+  Xval = analogRead(inX);
   Serial.print("X: ");
-  Serial.print(intX);
+  Serial.print(Xval);
   Serial.print(" ");
   Serial.print("Y: ");
-  Serial.println(intY);
-  if (intY > 800||intY < 100||intX > 800||intX < 100)
+  Serial.println(Yval);
+  if (Yval > 800 || Yval < 100 || Xval > 800 || Xval < 100)
   {
-    if (intY > 800) //JoyCon1
+    if (Yval > 800) //JoyCon1
     {
       forward();
       Serial.println("Forward.");
 
     }
-    else if (intY < 100)
+    else if (Yval < 100)
     {
       backward();
       Serial.println("Backward.");
     }
-    if (intX > 800)
+    if (Xval > 800 && (Yval > 100 && Yval < 800))
     {
       rightTurn();
       Serial.println("Right Turn");
     }
-    else if (intX < 100)
+    else if (Xval < 100 && (Yval > 100 && Yval < 800))
     {
       leftTurn();
       Serial.println("Left Turn");
@@ -132,48 +136,53 @@ void loop() {
     Serial.println("Stopped");
   }
 
-  if (inX2 > 800)    //Joycon2 for Servo
+  if (Xval2 > 800)    //Joycon2 for Servo
   {
     //Servo1 Pos1
+    Serial.println("Servo1 moved.");
+    gripper_motor_1.write(45);
+    delay(delayTime);
   }
-  else if (inX2 < 100)
+  else if (Xval2 < 100)
   {
     //Servo1 Pos 0
   }
 
-
-  if (inY2 > 800)
+  if (Yval2 > 800)
   {
     //Servo2 Pos1
+    Serial.println("Servo2 moved.");
+    gripper_motor_2.write(45);
+    delay(delayTime);
   }
-  else if (inY2 < 100)
+  else if (Yval2 < 100)
   {
     //Servo2 Pos0
   }
 
-  if (inPressed == 0 && inPressed2 == 0)
-  {
+  /*if (inPressed == 0 && inPressed2 == 0)
+    {
     //ropeclimber not Working
-  }
-  else if (inPressed == 1 && inPressed2 == 0)
-  {
+    }
+    else if (inPressed == 1 && inPressed2 == 0)
+    {
     //ropeclimbs upppp
-  }
-  else if (inPressed == 1 && inPressed2 == 1)
-  {
+    }
+    else if (inPressed == 1 && inPressed2 == 1)
+    {
     //ropeclimbs down
-  }
+    }*/
 
   //Servo 1
 
-  gripper_motor_1.write(45);
-  delay(delayTime);
+  /*gripper_motor_1.write(45);
+    delay(delayTime);
 
 
-  //Servo 2
+    //Servo 2
 
-  gripper_motor_2.write(45);
-  delay(delayTime);
+    gripper_motor_2.write(45);
+    delay(delayTime);*/
 
 
 
