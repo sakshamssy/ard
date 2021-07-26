@@ -4,16 +4,16 @@ int pin_1 = 8;  //left motor forward
 int pin_2 = 9;  //left motor backward
 int pin_3 = 10; //right motor forward
 int pin_4 = 11; //right motor backward
-int initang1 = 30;
-int initang2 = 30;
+int initang1 = 50;
+int initang2 = 50;
 int Xtemp;
 int Ytemp;
-int Servo_pin1 = 2; //horizontalServo
-int Servo_pin2 = 3; //verticalServo
+int Servo_pin1 = 2; //verticalServo
+int Servo_pin2 = 3; //horizontalServo
 Servo gripper_motor_1;
 Servo gripper_motor_2;
 
-int delay_time = 700;
+int delay_time = 300;
 
 //for Joystick and related stuff
 //JoyCon1
@@ -140,7 +140,7 @@ void loop()
   {
     //Servo1 Pos1
     Serial.println("Servo1 moved anticlockwise.");
-    for (int position_1 = initang1; position_1 <= 180; position_1 += 1) {
+    for (int position_1 = initang1; position_1 <= 180; position_1 += 10) {
       Xtemp = analogRead(inX2);
       if (Xtemp < 800)
       {
@@ -148,7 +148,7 @@ void loop()
         break;
       }
       Serial.println(position_1);
-      gripper_motor_2.write(position_1);
+      gripper_motor_1.write(position_1);
       delay(delay_time);
     }
   }
@@ -156,7 +156,7 @@ void loop()
   {
     //Servo1 Pos 0
     Serial.println("Servo1 moved clockwise.");
-    for (int position_1 = initang1; position_1 >= 0; position_1 -= 1) {
+    for (int position_1 = initang1; position_1 >= 0; position_1 -= 10) {
       Xtemp = analogRead(inX2);
       if (Xtemp > 100)
       {
@@ -164,7 +164,7 @@ void loop()
         break;
       }
       Serial.println(position_1);
-      gripper_motor_2.write(position_1);
+      gripper_motor_1.write(position_1);
       delay(delay_time);
 
     }
