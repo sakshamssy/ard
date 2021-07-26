@@ -8,8 +8,8 @@ int initang1 = 30;
 int initang2 = 30;
 int Xtemp;
 int Ytemp;
-int Servo_pin1 = 2; //verticalServo
-int Servo_pin2 = 3; //horizontalServo
+int Servo_pin1 = 2; //horizontalServo
+int Servo_pin2 = 3; //verticalServo
 Servo gripper_motor_1;
 Servo gripper_motor_2;
 
