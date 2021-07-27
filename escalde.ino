@@ -1,15 +1,15 @@
 #include <Servo.h>
 
-int pin_1 = 8;  //left motor forward
-int pin_2 = 9;  //left motor backward
-int pin_3 = 10; //right motor forward
-int pin_4 = 11; //right motor backward
+int pin_1 = 4;  //left motor forward
+int pin_2 = 5;  //left motor backward
+int pin_3 = 6; //right motor forward
+int pin_4 = 7; //right motor backward
 int initang1 = 50;
 int initang2 = 50;
 int Xtemp;
 int Ytemp;
-int Servo_pin1 = 2; //verticalServo
-int Servo_pin2 = 3; //horizontalServo
+int Servo_pin1 = 9; //verticalServo
+int Servo_pin2 = 10; //horizontalServo
 Servo gripper_motor_1;
 Servo gripper_motor_2;
 
@@ -19,7 +19,7 @@ int delay_time = 300;
 //JoyCon1
 const int inX = A0; // analog input for x-axis
 const int inY = A1; // analog input for y-axis
-const int inPressed = 7;  // input for detecting whether the joystick/button is pressed
+const int inPressed = 2;  // input for detecting whether the joystick/button is pressed
 int Xval; // variable to store x value
 int Yval; // variable to store y value
 int notPressed = 0; // variable to store the button's state => 1 if not pressed
@@ -27,7 +27,7 @@ int notPressed = 0; // variable to store the button's state => 1 if not pressed
 //JoyCon2
 const int inX2 = A4;  // analog input for x-axis
 const int inY2 = A5;  // analog input for y-axis
-const int inPressed2 = 6; // input for detecting whether the joystick/button is pressed
+const int inPressed2 = 1; // input for detecting whether the joystick/button is pressed
 int Xval2;  // variable to store x value
 int Yval2;  // variable to store y value
 int notPressed2 = 0;  // variable to store the button's state => 1 if not pressed
