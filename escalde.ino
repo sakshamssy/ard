@@ -8,6 +8,8 @@ int initang1 = 50;
 int initang2 = 50;
 int Xtemp;
 int Ytemp;
+int upperanglim = 175;
+int loweranglim = 5;
 int Servo_pin1 = 9; //verticalServo
 int Servo_pin2 = 10; //horizontalServo
 Servo gripper_motor_1;
@@ -140,7 +142,7 @@ void loop()
   {
     //Servo1 Pos1
     Serial.println("Servo1 moved anticlockwise.");
-    for (int position_1 = initang1; position_1 <= 180; position_1 += 10) {
+    for (int position_1 = initang1; position_1 <= upperanglim; position_1 += 10) {
       Xtemp = analogRead(inX2);
       if (Xtemp < 800)
       {
@@ -156,7 +158,7 @@ void loop()
   {
     //Servo1 Pos 0
     Serial.println("Servo1 moved clockwise.");
-    for (int position_1 = initang1; position_1 >= 0; position_1 -= 10) {
+    for (int position_1 = initang1; position_1 >= loweranglim; position_1 -= 10) {
       Xtemp = analogRead(inX2);
       if (Xtemp > 100)
       {
@@ -170,24 +172,38 @@ void loop()
     }
   }
 
-  //  if (Yval2 > 800)
-  //  {
-  //    //Servo2 Pos1
-  //    Serial.println("Servo2 moved anticlockwise.");
-  //    for (int position_2 = initang2; position_2 <= 180; position_2 += 1) {
-  //      gripper_motor_2.write(position_2);
-  //      delay(delay_time);
-  //    }
-  //  }
-  //  else if (Yval2 < 100)
-  //  {
-  //    //Servo2 Pos0
-  //    Serial.println("Servo2 moved clockwise.");
-  //    for (int position_2 = 180; position_2 >= initang2; position_2 -= 1) {
-  //      gripper_motor_2.write(position_2);
-  //      delay(delay_time);
-  //    }
-  //  }
+  if (Yval2 > 800)
+  {
+    //Servo2 Pos1
+    Serial.println("Servo2 moved anticlockwise.");
+    for (int position_2 = initang2; position_2 <= upperanglim; position_2 += 10) {
+      Ytemp = analogRead(inY2);
+      if (Ytemp < 800)
+      {
+        initang2 = position_2;
+        break;
+      }
+      Serial.println(position_2);
+      gripper_motor_2.write(position_2);
+      delay(delay_time);
+    }
+  }
+  else if (Yval2 < 100)
+  {
+    //Servo2 Pos0
+    Serial.println("Servo2 moved clockwise.");
+    for (int position_2 = initang2; position_2 >= loweranglim; position_2 -= 10) {
+      Ytemp = analogRead(inY2);
+      if (Ytemp > 100)
+      {
+        initang2 = position_2;
+        break;
+      }
+      Serial.println(position_2);
+      gripper_motor_2.write(position_2);
+      delay(delay_time);
+    }
+  }
 
   /*if (inPressed == 0 && inPressed2 == 0)
     {
@@ -206,9 +222,7 @@ void loop()
 
   /*gripper_motor_1.write(45);
     delay(delayTime);
-
     //Servo 2
-
     gripper_motor_2.write(45);
     delay(delayTime); */
 
