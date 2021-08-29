@@ -1,36 +1,38 @@
 #include <Servo.h>
-int pin_1 = 8;//left motor forward
-int pin_2 = 9;//left motor backward
-int intY;
-int intX;
-int pin_3 = 10;//right motor forward
-int pin_4 = 11;//right motor backward
 
-int Servo_pin1 = 2;//verticalServo
-int Servo_pin2 = 3;//horizontalServo
-int position_1 = 45;
+int pin_1 = 4;  //left motor forward
+int pin_2 = 5;  //left motor backward
+int pin_3 = 6; //right motor forward
+int pin_4 = 7; //right motor backward
+int initang1 = 50;
+int initang2 = 50;
+int Xtemp;
+int Ytemp;
+int upperanglim = 175;
+int loweranglim = 5;
+int Servo_pin1 = 9; //verticalServo
+int Servo_pin2 = 10; //horizontalServo
 Servo gripper_motor_1;
 Servo gripper_motor_2;
 
-
-int delayTime = 700;
+int delay_time = 300;
 
 //for Joystick and related stuff
 //JoyCon1
 const int inX = A0; // analog input for x-axis
 const int inY = A1; // analog input for y-axis
-const int inPressed = 7; // input for detecting whether the joystick/button is pressed
-int xValue = 506; // variable to store x value
-int yValue = 506; // variable to store y value
+const int inPressed = 2;  // input for detecting whether the joystick/button is pressed
+int Xval; // variable to store x value
+int Yval; // variable to store y value
 int notPressed = 0; // variable to store the button's state => 1 if not pressed
 
 //JoyCon2
-const int inX2 = A4; // analog input for x-axis
-const int inY2 = A5; // analog input for y-axis
-const int inPressed2 = 6; // input for detecting whether the joystick/button is pressed
-int xValue2 = 506; // variable to store x value
-int yValue2 = 506; // variable to store y value
-int notPressed2 = 0; // variable to store the button's state => 1 if not pressed
+const int inX2 = A4;  // analog input for x-axis
+const int inY2 = A5;  // analog input for y-axis
+const int inPressed2 = 1; // input for detecting whether the joystick/button is pressed
+int Xval2;  // variable to store x value
+int Yval2;  // variable to store y value
+int notPressed2 = 0;  // variable to store the button's state => 1 if not pressed
 
 void forward()
 {
@@ -58,7 +60,7 @@ void backward()
 void rightTurn()
 {
   digitalWrite(pin_1, 0);
-  digitalWrite(pin_2, 1);      //MAKING LEFT MOTORS WORK TO TURN RIGHT
+  digitalWrite(pin_2, 1); //MAKING LEFT MOTORS WORK TO TURN RIGHT
   digitalWrite(pin_3, 1);
   digitalWrite(pin_4, LOW);
 
@@ -66,14 +68,14 @@ void rightTurn()
 void leftTurn()
 {
   digitalWrite(pin_1, 1);
-  digitalWrite(pin_2, LOW);      //MAKING RIGHT MOTORS WORK TO TURN LEFT
+  digitalWrite(pin_2, LOW); //MAKING RIGHT MOTORS WORK TO TURN LEFT
   digitalWrite(pin_3, 0);
   digitalWrite(pin_4, 1);
 
 }
 
-
-void setup() {
+void setup()
+{
   pinMode(pin_1, OUTPUT);
   pinMode(pin_2, OUTPUT);
   pinMode(pin_3, OUTPUT);
@@ -84,97 +86,144 @@ void setup() {
   Serial.begin(9600);
 
   //Setup for Joycon and its inbuilt switch
-  pinMode(inX, INPUT); // setup x input
-  pinMode(inY, INPUT); // setup y input
+  pinMode(inX, INPUT);  // setup x input
+  pinMode(inY, INPUT);  // setup y input
   pinMode(inPressed, INPUT_PULLUP); // we use a pullup-resistor for the button functionality
   pinMode(inX2, INPUT); // setup x input
   pinMode(inY2, INPUT); // setup y input
-  pinMode(inPressed2, INPUT_PULLUP); // we use a pullup-resistor for the button functionality
+  pinMode(inPressed2, INPUT_PULLUP);  // we use a pullup-resistor for the button functionality
   //wE COULD USE THIS BUTTON FOR STARTING THE DC MOTOR FOR CLIMBER
 }
 
-void loop() {
+void loop()
+{
   //need to discuss this partttttttt
-  intY = analogRead(A1);
-  intX = analogRead(A0);
+  gripper_motor_2.write(initang2);
+  gripper_motor_1.write(initang1);
+  Yval2 = analogRead(inY2);
+  Xval2 = analogRead(inX2);
+  Yval = analogRead(inY);
+  Xval = analogRead(inX);
   Serial.print("X: ");
-  Serial.print(intX);
+  Serial.print(Xval2);
   Serial.print(" ");
   Serial.print("Y: ");
-  Serial.println(intY);
-  if (intY > 800||intY < 100||intX > 800||intX < 100)
-  {
-    if (intY > 800) //JoyCon1
-    {
-      forward();
-      Serial.println("Forward.");
+  Serial.println(Yval2);
 
-    }
-    else if (intY < 100)
-    {
-      backward();
-      Serial.println("Backward.");
-    }
-    if (intX > 800)
-    {
-      rightTurn();
-      Serial.println("Right Turn");
-    }
-    else if (intX < 100)
-    {
-      leftTurn();
-      Serial.println("Left Turn");
-    }
+  if (Yval > 800) //JoyCon1
+  {
+    forward();
+    Serial.println("Forward.");
+  }
+  else if (Yval < 100)
+  {
+    backward();
+    Serial.println("Backward.");
+  }
+  else if (Xval < 100 && (Yval > 100 && Yval < 800))
+  {
+    rightTurn();
+    Serial.println("Right Turn");
+  }
+  else if (Xval > 800 && (Yval > 100 && Yval < 800))
+  {
+    leftTurn();
+    Serial.println("Left Turn");
   }
   else
   {
     stopmot();
     Serial.println("Stopped");
   }
+  delay(500);
 
-  if (inX2 > 800)    //Joycon2 for Servo
+
+  if (Xval2 > 800)  //Joycon2 for Servo
   {
     //Servo1 Pos1
+    Serial.println("Servo1 moved anticlockwise.");
+    for (int position_1 = initang1; position_1 <= upperanglim; position_1 += 10) {
+      Xtemp = analogRead(inX2);
+      if (Xtemp < 800)
+      {
+        initang1 = position_1;
+        break;
+      }
+      Serial.println(position_1);
+      gripper_motor_1.write(position_1);
+      delay(delay_time);
+    }
   }
-  else if (inX2 < 100)
+  else if (Xval2 < 100)
   {
     //Servo1 Pos 0
+    Serial.println("Servo1 moved clockwise.");
+    for (int position_1 = initang1; position_1 >= loweranglim; position_1 -= 10) {
+      Xtemp = analogRead(inX2);
+      if (Xtemp > 100)
+      {
+        initang1 = position_1;
+        break;
+      }
+      Serial.println(position_1);
+      gripper_motor_1.write(position_1);
+      delay(delay_time);
+
+    }
   }
 
-
-  if (inY2 > 800)
+  if (Yval2 > 800)
   {
     //Servo2 Pos1
+    Serial.println("Servo2 moved anticlockwise.");
+    for (int position_2 = initang2; position_2 <= upperanglim; position_2 += 10) {
+      Ytemp = analogRead(inY2);
+      if (Ytemp < 800)
+      {
+        initang2 = position_2;
+        break;
+      }
+      Serial.println(position_2);
+      gripper_motor_2.write(position_2);
+      delay(delay_time);
+    }
   }
-  else if (inY2 < 100)
+  else if (Yval2 < 100)
   {
     //Servo2 Pos0
+    Serial.println("Servo2 moved clockwise.");
+    for (int position_2 = initang2; position_2 >= loweranglim; position_2 -= 10) {
+      Ytemp = analogRead(inY2);
+      if (Ytemp > 100)
+      {
+        initang2 = position_2;
+        break;
+      }
+      Serial.println(position_2);
+      gripper_motor_2.write(position_2);
+      delay(delay_time);
+    }
   }
 
-  if (inPressed == 0 && inPressed2 == 0)
-  {
+  /*if (inPressed == 0 && inPressed2 == 0)
+    {
     //ropeclimber not Working
-  }
-  else if (inPressed == 1 && inPressed2 == 0)
-  {
+    }
+    else if (inPressed == 1 && inPressed2 == 0)
+    {
     //ropeclimbs upppp
-  }
-  else if (inPressed == 1 && inPressed2 == 1)
-  {
+    }
+    else if (inPressed == 1 && inPressed2 == 1)
+    {
     //ropeclimbs down
-  }
+    }*/
 
   //Servo 1
 
-  gripper_motor_1.write(45);
-  delay(delayTime);
-
-
-  //Servo 2
-
-  gripper_motor_2.write(45);
-  delay(delayTime);
-
-
+  /*gripper_motor_1.write(45);
+    delay(delayTime);
+    //Servo 2
+    gripper_motor_2.write(45);
+    delay(delayTime); */
 
 }
